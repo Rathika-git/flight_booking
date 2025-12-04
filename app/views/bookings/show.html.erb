@@ -4,14 +4,14 @@
   Flight:
   <%= @booking.flight.departure_airport.code %> →
   <%= @booking.flight.arrival_airport.code %><br>
-  <%= @booking.flight.start_datetime %>
+  <%= @booking.flight.start_datetime.in_time_zone("Asia/Kolkata").strftime("%F %R") %>
 </p>
 
 <h2>Passengers</h2>
 
-<% @booking.passengers.each do |p| %>
+<% @booking.passengers.each_with_index do |p, index| %>
   <p>
-    <%= p.name %> - <%= p.email %>
+    Passenger <%= index + 1 %>: <%= p.name %> - <%= p.email %>
   </p>
 <% end %>
 

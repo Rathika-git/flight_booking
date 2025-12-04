@@ -4,20 +4,22 @@
   Flight:
   <%= @flight.departure_airport.code %> →
   <%= @flight.arrival_airport.code %><br>
-  <%= @flight.start_datetime %>
+  <%= @flight.start_datetime.in_time_zone("Asia/Kolkata").strftime("%F %R") %>
 </p>
 
 <%= form_with model: @booking do |f| %>
   <%= f.hidden_field :flight_id %>
 
- <%= f.fields_for :passengers do |pf| %> 
-    <div class="passenger-field"> 
-    <%= pf.label :name %> 
-    <%= pf.text_field :name %> 
-    <%= pf.label :email %> 
-    <%= pf.text_field :email %> 
-    </div> 
-    <% end %>
+  <%= f.fields_for :passengers do |pf| %>
+    <% index = pf.index || 0 %> 
+    <div class="passenger-field">
+      <h3>Passenger <%= index + 1 %></h3>
+      <%= pf.label :name %>
+      <%= pf.text_field :name %>
+      <%= pf.label :email %>
+      <%= pf.text_field :email %>
+    </div>
+  <% end %>
 
   <%= f.submit "Book Flight" %>
 <% end %>
