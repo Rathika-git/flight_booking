@@ -1,0 +1,53 @@
+<h1>Search Flights</h1>
+<% if flash[:alert] %>
+  <p style="color:red;"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with url: flights_path, method: :get, scope: :flight do |f| %>
+  <div>
+    <%= f.label :departure_airport_id, "From" %>
+    <%= f.collection_select :departure_airport_id, Airport.all, :id, :code, prompt: "Select Departure" %>
+  </div>
+
+  <div>
+    <%= f.label :arrival_airport_id, "To" %>
+    <%= f.collection_select :arrival_airport_id, Airport.all, :id, :code, prompt: "Select Arrival" %>
+  </div>
+
+  <div>
+    <%= f.label :date %>
+    <%= select_tag "flight[date]",
+        options_for_select(@dates.map { |d| [d.to_s, d] }), prompt: "Select Date" %>
+  </div>
+
+  <div>
+    <%= f.label :passengers %>
+    <%= select_tag "flight[passengers]",
+        options_for_select(1..4), prompt: "Select Passengers" %>
+  </div>
+
+  <%= f.submit "Search" %>
+<% end %>
+
+<% if @flights.present? %>
+  <h2>Available Flights</h2>
+
+ <%= form_with url: flights_path, method: :get do %>
+  <%= hidden_field_tag :passengers, @selected_passengers %>
+
+  <% @flights.each do |flight| %>
+    <div>
+      <%= radio_button_tag :flight_id, flight.id %>
+      <%= flight.departure_airport.code %> →
+      <%= flight.arrival_airport.code %>
+      <%= flight.start_datetime.strftime("%F %R") %>
+    </div>
+  <% end %>
+
+  <%= submit_tag "Select Flight", name: "commit" %>
+
+  <% if flash[:flight_error] %>
+    <p style="color:red; margin-top:10px;"><%= flash[:flight_error] %></p>
+  <% end %>
+  <% end %>
+<% end %>

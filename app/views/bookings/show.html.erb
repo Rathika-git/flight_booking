@@ -1,0 +1,18 @@
+<h1>Booking Details</h1>
+
+<p>
+  Flight:
+  <%= @booking.flight.departure_airport.code %> →
+  <%= @booking.flight.arrival_airport.code %><br>
+  <%= @booking.flight.start_datetime %>
+</p>
+
+<h2>Passengers</h2>
+
+<% @booking.passengers.each do |p| %>
+  <p>
+    <%= p.name %> - <%= p.email %>
+  </p>
+<% end %>
+
+<%= link_to "Home", root_path %>
