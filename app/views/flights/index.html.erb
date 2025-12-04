@@ -36,14 +36,11 @@
   <%= hidden_field_tag :passengers, @selected_passengers %>
 
   <% @flights.each do |flight| %>
-    <div>
+    <div class="flight-option">
       <%= radio_button_tag :flight_id, flight.id %>
-      <%= flight.departure_airport.code %> →
-      <%= flight.arrival_airport.code %>
-      <%= flight.start_datetime.strftime("%F %R") %>
+      <label><%= flight.departure_airport.code %> → <%= flight.arrival_airport.code %> | <%= flight.start_datetime.strftime("%F %R") %></label>
     </div>
   <% end %>
-
   <%= submit_tag "Select Flight", name: "commit" %>
 
   <% if flash[:flight_error] %>
