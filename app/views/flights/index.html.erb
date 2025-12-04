@@ -38,13 +38,16 @@
   <% @flights.each do |flight| %>
     <div class="flight-option">
       <%= radio_button_tag :flight_id, flight.id %>
-      <label><%= flight.departure_airport.code %> → <%= flight.arrival_airport.code %> | <%= flight.start_datetime.strftime("%F %R") %></label>
+      <label>
+      <%= flight.departure_airport.code %> → <%= flight.arrival_airport.code %> | <%= flight.start_datetime.strftime("%F %R") %></label>
     </div>
   <% end %>
   <%= submit_tag "Select Flight", name: "commit" %>
 
   <% if flash[:flight_error] %>
-    <p style="color:red; margin-top:10px;"><%= flash[:flight_error] %></p>
+    <p style="color:red; margin-top:10px;">
+    <%= flash[:flight_error] %>
+    </p>
   <% end %>
   <% end %>
 <% end %>
