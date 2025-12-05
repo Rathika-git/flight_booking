@@ -1,4 +1,4 @@
-Airport.create([{ code: "SFO" }, { code: "NYC" }])
+Airport.create([ { code: "SFO" }, { code: "NYC" } ])
 
 Flight.create(
   departure_airport_id: Airport.first.id,
